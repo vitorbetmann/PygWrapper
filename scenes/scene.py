@@ -2,10 +2,13 @@ from abc import ABC, abstractmethod
 
 
 class Scene(ABC):
-    def __init__(self, screen):
+    def __init__(self, screen, is_first=False):
         self.screen = screen
         self.screen_rect = self.screen.get_rect()
         self.scene_manager = None
+        self.first = is_first
+        self.comes_from = []
+        self.goes_to = []
 
     @abstractmethod
     def reset(self):
@@ -16,11 +19,11 @@ class Scene(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def leave(self):
+    def exit(self):
         raise NotImplementedError
 
     @abstractmethod
-    def handle_event(self, event):
+    def handle_events(self, event):
         raise NotImplementedError
 
     @abstractmethod
@@ -28,5 +31,5 @@ class Scene(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def draw(self):
+    def render(self):
         raise NotImplementedError

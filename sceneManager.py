@@ -24,8 +24,8 @@ class SceneManager:
     def remove_scene(self, scene_name: str):
         self.scenes.pop(scene_name, None)
 
-    def goto(self, next_scene_name: str):
-        scene_data = self.current_scene.leave()
+    def go_to(self, next_scene_name: str):
+        scene_data = self.current_scene.exit()
         self.current_scene = self.scenes.get(next_scene_name)
         self.current_scene.enter(scene_data)
 
@@ -37,7 +37,7 @@ class SceneManager:
                     sys.exit()
                 self.current_scene.handle_event(event)
             self.current_scene.update(self.dt)
-            self.current_scene.draw()
+            self.current_scene.render()
             pygame.display.update()
             # self.clock.tick(FPS)  # Uncomment if FPS capping is desired.
 
@@ -51,3 +51,22 @@ class SceneManager:
     @property
     def prev_time(self):
         return self._prev_time
+
+
+# function StateMachine:init(states)
+# 	self.empty = {
+# 		render = function() end,
+# 		update = function() end,
+# 		enter = function() end,
+# 		exit = function() end
+# 	}
+# 	self.states = states or {} -- [name] -> [function that returns states]
+# 	self.current = self.empty
+# end
+#
+# function StateMachine:change(stateName, enterParams)
+# 	assert(self.states[stateName]) -- state must exist!
+# 	self.current:exit()
+# 	self.current = self.states[stateName]()
+# 	self.current:enter(enterParams)
+# end
