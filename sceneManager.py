@@ -13,6 +13,7 @@ class SceneManager:
             scene.scene_manager = self
         self.current_scene = self.scenes.get("start")
         self.current_scene.enter()
+        self.prev_scene = None
 
         self._dt, self._prev_time = 0, 0
 
@@ -24,7 +25,9 @@ class SceneManager:
     def remove_scene(self, scene_name: str):
         self.scenes.pop(scene_name, None)
 
-    def goto(self, next_scene_name: str):
+    def go_to(self, next_scene_name: str):
+        self.prev_scene = self.current_scene
+
         scene_data = self.current_scene.leave()
         self.current_scene = self.scenes.get(next_scene_name)
         self.current_scene.enter(scene_data)
